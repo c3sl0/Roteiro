@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matricula</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Poppins', sans-serif;
+background:#f8fafc;
+color:#1f2937;
+}
+
+/* CARD */
+.glass{
+background:#ffffff;
+border:1px solid #e5e7eb;
+box-shadow:0 20px 40px rgba(0,0,0,0.06);
+}
+
+/* INPUT */
+.input{
+background:#f9fafb;
+border:1px solid #e5e7eb;
+transition:.3s;
+}
+
+.input:focus{
+outline:none;
+border-color:#3b82f6;
+box-shadow:0 0 0 3px rgba(59,130,246,.15);
+}
+
+/* BOTÃO */
+.btn-premium{
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:white;
+font-weight:600;
+transition:.3s;
+}
+
+.btn-premium:hover{
+transform:scale(1.02);
+box-shadow:0 10px 25px rgba(59,130,246,.4);
+}
+
+/* PIX */
+.pix-box{
+background:#eff6ff;
+border:1px solid #bfdbfe;
+}
+
+/* Método selecionado */
+.activePay{
+border:2px solid #3b82f6;
+background:#eff6ff;
+color:#2563eb;
+}
+
+/* animação */
+.fade{
+animation:fade .4s ease;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1;}
+}
+
+/* loading */
+.loader{
+border:3px solid #f3f3f3;
+border-top:3px solid #3b82f6;
+border-radius:50%;
+width:22px;
+height:22px;
+animation:spin 1s linear infinite;
+margin:auto;
+}
+
+@keyframes spin{
+0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+}
+
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<header class="text-center py-12">
+
+<h1 class="text-3xl font-bold text-blue-600">
+Checkout Seguro
+</h1>
+
+<p class="text-gray-500 mt-2">
+Ambiente protegido e criptografado
+</p>
+
+</header>
+
+<div class="max-w-6xl mx-auto px-4 pb-16">
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<!-- RESUMO -->
+<div>
+
+<div class="glass rounded-2xl p-8 sticky top-10">
+
+<h2 class="text-lg font-semibold mb-6 text-center">
+Resumo do Pedido
+</h2>
+
+<div class="space-y-4">
+
+<div class="flex justify-between">
+<span>Produto</span>
+<span>Plano Premium</span>
+</div>
+
+<div class="flex justify-between">
+<span>Entrega</span>
+<span class="text-green-500">Imediata</span>
+</div>
+
+<div class="border-t pt-4 flex justify-between text-lg font-bold text-blue-600">
+<span>Total</span>
+<span>R$ 197,00</span>
+</div>
+
+</div>
+
+</div>
+</div>
+
+<!-- FORM -->
+<div class="md:col-span-2">
+
+<div class="glass rounded-2xl p-8">
+
+<h2 class="text-lg font-semibold mb-6">
+Dados para pagamento
+</h2>
+
+<form class="space-y-6" onsubmit="return false">
+
+<input id="nome"
+type="text"
+placeholder="Nome completo"
+class="input w-full rounded-xl px-4 py-3"/>
+
+<input id="cpf"
+type="text"
+placeholder="CPF"
+class="input w-full rounded-xl px-4 py-3"/>
+
+<input id="email"
+type="email"
+placeholder="Email"
+class="input w-full rounded-xl px-4 py-3"/>
+
+<!-- MÉTODO -->
+<div class="flex gap-4">
+
+<button type="button"
+id="btnCartao"
+onclick="mostrarCartao()"
+class="flex-1 py-3 rounded-xl activePay">
+Cartão
+</button>
+
+<button type="button"
+id="btnPix"
+onclick="mostrarPix()"
+class="flex-1 border py-3 rounded-xl">
+PIX
+</button>
+
+</div>
+
+<!-- CARTÃO -->
+<div id="cartaoBox" class="border rounded-xl p-5 bg-gray-50 fade">
+
+<h3 class="mb-4 font-medium">
+Cartão de crédito
+</h3>
+
+<input id="numeroCartao"
+placeholder="Número do cartão"
+class="input w-full rounded-xl px-4 py-3 mb-3"/>
+
+<div class="grid grid-cols-3 gap-3">
+
+<input id="validade"
+placeholder="MM/AA"
+class="input rounded-xl px-4 py-3"/>
+
+<input id="cvv"
+placeholder="CVV"
+class="input rounded-xl px-4 py-3"/>
+
+<select id="parcelas"
+class="input rounded-xl px-4 py-3"></select>
+
+</div>
+
+<div id="valorTotal" class="text-sm mt-2 text-blue-500"></div>
+<div id="bandeira" class="text-sm mt-1 text-gray-500"></div>
+
+</div>
+
+<!-- PIX -->
+<div id="pixBox" class="hidden pix-box rounded-xl p-6 fade">
+
+<h3 class="font-medium mb-4 text-blue-600">
+Pagamento via PIX
+</h3>
+
+<div class="bg-white p-4 rounded-xl text-center">
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=PIX-DEMO"
+class="mx-auto mb-3">
+<p class="text-xs text-gray-500">
+QR Code ilustrativo
+</p>
+</div>
+
+</div>
+
+<button
+id="btnPagar"
+type="button"
+onclick="pagar()"
+class="w-full btn-premium py-4 rounded-xl mt-4">
+
+Finalizar pagamento
+
+</button>
+
+</form>
+
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* CONFIG */
+const valorProduto = 197;
+const jurosMes = 0.0299;
+const maxParcelas = 12;
+
+/* PARCELAMENTO */
+function calcularParcelas(){
+
+let select = document.getElementById("parcelas");
+
+for(let i=1;i<=maxParcelas;i++){
+
+let valorParcela;
+let valorTotal;
+let texto;
+
+if(i<=3){
+valorParcela = valorProduto/i;
+valorTotal = valorProduto;
+texto = i+"x de R$ "+valorParcela.toFixed(2)+" (sem juros)";
+}else{
+
+valorParcela = (valorProduto * jurosMes) /
+(1 - Math.pow(1 + jurosMes, -i));
+
+valorTotal = valorParcela*i;
+
+texto = i+"x de R$ "+valorParcela.toFixed(2);
+}
+
+let option = document.createElement("option");
+option.value = valorTotal.toFixed(2);
+option.text = texto;
+
+select.appendChild(option);
+
+}
+
+document.getElementById("valorTotal").innerHTML =
+"Total: R$ "+valorProduto.toFixed(2);
+
+}
+calcularParcelas();
+
+/* MÉTODO */
+function mostrarPix(){
+
+pixBox.classList.remove("hidden");
+cartaoBox.classList.add("hidden");
+
+btnPix.classList.add("activePay");
+btnCartao.classList.remove("activePay");
+
+}
+
+function mostrarCartao(){
+
+cartaoBox.classList.remove("hidden");
+pixBox.classList.add("hidden");
+
+btnCartao.classList.add("activePay");
+btnPix.classList.remove("activePay");
+
+}
+
+/* CPF */
+cpf.addEventListener("input",e=>{
+let v=e.target.value.replace(/\D/g,'').slice(0,11);
+v=v.replace(/(\d{3})(\d)/,"$1.$2");
+v=v.replace(/(\d{3})(\d)/,"$1.$2");
+v=v.replace(/(\d{3})(\d{1,2})$/,"$1-$2");
+e.target.value=v;
+});
+
+/* CARTÃO */
+numeroCartao.addEventListener("input",e=>{
+let v=e.target.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();
+e.target.value=v;
+detectarBandeira(v.replace(/\s/g,''));
+});
+
+/* BANDEIRA */
+function detectarBandeira(n){
+let flag="";
+if(/^4/.test(n)) flag="Visa";
+else if(/^5[1-5]/.test(n)) flag="Mastercard";
+else if(/^3[47]/.test(n)) flag="American Express";
+else if(/^6/.test(n)) flag="Elo";
+bandeira.innerHTML=flag;
+}
+
+/* LUHN */
+function validarCartao(numero){
+
+numero = numero.replace(/\s/g,'');
+
+let soma=0;
+let alt=false;
+
+for(let i=numero.length-1;i>=0;i--){
+
+let n=parseInt(numero[i]);
+
+if(alt){
+n*=2;
+if(n>9)n-=9;
+}
+
+soma+=n;
+alt=!alt;
+}
+
+return soma%10==0;
+}
+
+/* PAGAMENTO */
+function pagar(){
+
+let nome = document.getElementById("nome").value;
+let email = document.getElementById("email").value;
+let cpfVal = document.getElementById("cpf").value;
+
+if(!nome || !email || !cpfVal){
+alert("Preencha todos os campos");
+return;
+}
+
+/* loading */
+btnPagar.innerHTML='<div class="loader"></div>';
+
+setTimeout(()=>{
+
+if(!pixBox.classList.contains("hidden")){
+
+alert("PIX gerado (simulação)");
+
+}else{
+
+let numero = document.getElementById("numeroCartao").value;
+
+if(!validarCartao(numero)){
+alert("Cartão inválido");
+btnPagar.innerHTML="Finalizar pagamento";
+return;
+}
+
+alert("Pagamento aprovado (simulação)");
+
+}
+
+btnPagar.innerHTML="Finalizar pagamento";
+
+},1800);
+
+}
+
+</script>
+
+</body>
+</html>

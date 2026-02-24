@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Roteiros Personalizados</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html,body{
+overflow-x:hidden;
+}
+
+/* VARIÁVEIS */
+:root{
+--primary:#3b82f6;
+--primary-soft:#eaf4ff;
+--text:#1f2937;
+--text-soft:#6b7280;
+--border:#e5e7eb;
+}
+
+/* BASE */
+body{
+background:#fff;
+color:var(--text);
+line-height:1.6;
+}
+
+/* PROGRESS */
+.progress-bar{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+width:0%;
+background:var(--primary);
+z-index:999;
+}
+
+/* CONTAINER */
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+width:100%;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:90px 20px;
+background:linear-gradient(to bottom,#fff,var(--primary-soft));
+}
+
+.hero h2{
+font-size:34px;
+line-height:1.3;
+}
+
+.highlight{
+color:var(--primary);
+}
+
+/* PREÇO */
+.price-box{
+max-width:420px;
+margin:auto;
+padding:30px;
+border-radius:16px;
+border:1px solid var(--border);
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+background:#fff;
+margin-top:25px;
+}
+
+.old-price{
+text-decoration:line-through;
+color:#9ca3af;
+}
+
+.price{
+font-size:42px;
+color:var(--primary);
+font-weight:700;
+margin:10px 0;
+}
+
+/* BOTÃO */
+.btn{
+display:block;
+margin-top:20px;
+padding:18px;
+border-radius:12px;
+text-decoration:none;
+font-weight:600;
+color:white;
+background:linear-gradient(90deg,#3b82f6,#60a5fa);
+transition:.3s;
+text-align:center;
+}
+
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 30px rgba(59,130,246,.35);
+}
+
+/* SECTIONS */
+.section{
+padding:90px 20px;
+text-align:center;
+}
+
+.section:nth-child(even){
+background:var(--primary-soft);
+}
+
+/* VIDEO */
+.vsl-box{
+max-width:900px;
+margin:auto;
+padding:8px;
+border-radius:16px;
+background:var(--primary-soft);
+}
+
+.video-wrapper{
+position:relative;
+padding:20px;
+border-radius:14px;
+background:#fff;
+}
+
+video{
+width:100%;
+height:auto;
+border-radius:12px;
+}
+
+.play-overlay{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:100px;
+height:100px;
+background:var(--primary);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:60px;
+color:white;
+cursor:pointer;
+z-index:2;
+}
+
+/* FEATURES */
+.features{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.items{
+background:#fff;
+padding:25px;
+border-radius:16px;
+border:1px solid var(--border);
+box-shadow:0 8px 25px rgba(0,0,0,.05);
+transition:.3s;
+}
+
+.items:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px rgba(59,130,246,.15);
+}
+
+.icon{
+font-size:28px;
+color:var(--primary);
+margin-bottom:12px;
+}
+
+/* FAQ */
+.faq{
+max-width:800px;
+margin:auto;
+text-align:left;
+}
+
+.faq-item{
+border-bottom:1px solid var(--border);
+padding:15px;
+cursor:pointer;
+}
+
+.faq-answer{
+display:none;
+margin-top:10px;
+color:var(--text-soft);
+}
+
+/* FOOTER */
+footer{
+border-top:1px solid var(--border);
+padding:30px;
+text-align:center;
+margin-top:60px;
+}
+
+/* BOTÃO FIXO MOBILE */
+.mobile-cta{
+display:none;
+}
+
+/* ============================= */
+/* RESPONSIVO */
+/* ============================= */
+
+/* MOBILE */
+@media(max-width:768px){
+
+.hero{
+padding:60px 20px;
+}
+
+.hero h2{
+font-size:26px;
+}
+
+.section{
+padding:60px 15px;
+}
+
+.price{
+font-size:30px;
+}
+
+.features{
+grid-template-columns:1fr;
+}
+
+.play-overlay{
+width:70px;
+height:70px;
+font-size:35px;
+}
+
+.mobile-cta{
+display:block;
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#fff;
+padding:12px;
+box-shadow:0 -5px 20px rgba(0,0,0,.1);
+z-index:999;
+}
+
+}
+
+/* TABLET */
+@media(min-width:769px) and (max-width:1024px){
+
+.container{
+max-width:900px;
+}
+
+.features{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+/* TELAS GRANDES */
+@media(min-width:1400px){
+
+.container{
+max-width:1300px;
+}
+
+.hero h2{
+font-size:38px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- VSL -->
+<section class="section">
+<div class="container">
+
+<h2>Assista ao vídeo e entenda como funciona</h2>
+
+<div class="vsl-box">
+<div class="video-wrapper">
+
+<div class="play-overlay" id="playBtn">▶</div>
+
+<video id="vslVideo" controls preload="metadata">
+<source src="Roteiro.mp4" type="video/mp4">
+</video>
+
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- HERO -->
+<section class="hero">
+<div class="container">
+
+<p>Economize energia no planejamento da sua viagem...</p>
+
+<h2>
+Viva experiências únicas com 
+<span class="highlight">roteiros personalizados</span>
+</h2>
+
+<div class="price-box">
+
+<h3>Roteiros Personalizados</h3>
+
+<div class="old-price">De R$ 1.197</div>
+<div class="price">R$ 477</div>
+
+<a href="matricula.html" class="btn">
+GARANTIR MINHA VAGA →
+</a>
+
+<p style="margin-top:10px;color:#aaa;">
+⚡ Acesso imediato • 🔒 Compra segura
+</p>
+
+</div>
+</div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section class="section">
+<div class="container">
+
+<h2>O que você vai receber</h2>
+
+<div class="features">
+
+<div class="items">
+<div class="icon"><i class="fas fa-map"></i></div>
+<h3>Roteiro personalizado</h3>
+<p>Planejamento completo baseado no seu perfil.</p>
+</div>
+
+<div class="items">
+<div class="icon"><i class="fas fa-clock"></i></div>
+<h3>Economia de tempo</h3>
+<p>Evite horas de pesquisa.</p>
+</div>
+
+<div class="items">
+<div class="icon"><i class="fas fa-wallet"></i></div>
+<h3>Economia de dinheiro</h3>
+<p>Dicas práticas para reduzir custos.</p>
+</div>
+
+<div class="items">
+<div class="icon"><i class="fas fa-headset"></i></div>
+<h3>Suporte durante a viagem</h3>
+<p>Acompanhamento completo.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+<div class="container">
+
+<h2>Perguntas Frequentes</h2>
+
+<div class="faq">
+
+<div class="faq-item">
+<strong>Quando recebo acesso?</strong>
+<div class="faq-answer">Após o pagamento.</div>
+</div>
+
+<div class="faq-item">
+<strong>Funciona no celular?</strong>
+<div class="faq-answer">Sim.</div>
+</div>
+
+<div class="faq-item">
+<strong>Tem garantia?</strong>
+<div class="faq-answer">7 dias.</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<footer>
+© <span id="year"></span> Estefany
+</footer>
+
+<!-- BOTÃO MOBILE -->
+<div class="mobile-cta">
+<a href="matricula.html" class="btn">
+GARANTIR MINHA VAGA
+</a>
+</div>
+
+<script>
+
+/* PROGRESS BAR */
+window.onscroll = function(){
+let winScroll = document.documentElement.scrollTop;
+let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+document.getElementById("progress").style.width = (winScroll/height)*100 + "%";
+};
+
+/* PLAY VIDEO */
+document.getElementById("playBtn").addEventListener("click",function(){
+let video = document.getElementById("vslVideo");
+video.play();
+this.style.display="none";
+});
+
+/* FAQ */
+document.querySelectorAll(".faq-item").forEach(item=>{
+item.addEventListener("click",()=>{
+let ans = item.querySelector(".faq-answer");
+ans.style.display = ans.style.display==="block" ? "none" : "block";
+});
+});
+
+/* ANO */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+</script>
+
+</body>
+</html>
